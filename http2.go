@@ -365,7 +365,6 @@ func (h *http2Handler) roundTrip(w http.ResponseWriter, r *http.Request) {
 		log.Logf("[http2] %s - %s\n%s", r.RemoteAddr, laddr, string(dump))
 	}
 
-	w.Header().Set("Proxy-Agent", "gost/"+Version)
 
 	if !Can("tcp", host, h.options.Whitelist, h.options.Blacklist) {
 		log.Logf("[http2] %s - %s : Unauthorized to tcp connect to %s",
@@ -761,7 +760,6 @@ func (l *h2Listener) handleFunc(w http.ResponseWriter, r *http.Request) {
 		dump, _ := httputil.DumpRequest(r, false)
 		log.Log("[http2]", string(dump))
 	}
-	w.Header().Set("Proxy-Agent", "gost/"+Version)
 	conn, err := l.upgrade(w, r)
 	if err != nil {
 		log.Logf("[http2] %s - %s %s %s %s: %s",

@@ -173,7 +173,6 @@ func (h *httpHandler) handleRequest(conn net.Conn, req *http.Request) {
 		ProtoMinor: 1,
 		Header:     http.Header{},
 	}
-	resp.Header.Add("Proxy-Agent", "gost/"+Version)
 
 	if !Can("tcp", host, h.options.Whitelist, h.options.Blacklist) {
 		log.Logf("[http] %s - %s : Unauthorized to tcp connect to %s",
@@ -287,7 +286,7 @@ func (h *httpHandler) handleRequest(conn net.Conn, req *http.Request) {
 
 	if req.Method == http.MethodConnect {
 		b := []byte("HTTP/1.1 200 Connection established\r\n" +
-			"Proxy-Agent: gost/" + Version + "\r\n\r\n")
+			"\r\n")
 		if Debug {
 			log.Logf("[http] %s <- %s\n%s", conn.RemoteAddr(), conn.LocalAddr(), string(b))
 		}
